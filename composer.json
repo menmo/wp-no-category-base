@@ -1,0 +1,16 @@
+{
+  "name": "menmo/no-category-base",
+  "description": "This plugin removes the mandatory 'Category Base' from your category permalinks.",
+  "keywords": [
+    "wordpress",
+    "plugin",
+    "permalinks"
+  ],
+  "type": "wordpress-plugin",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/menmo/wp-no-category-base"
+    }
+  ]
+}

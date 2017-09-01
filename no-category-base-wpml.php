@@ -95,7 +95,7 @@ function no_category_base_rewrite_rules($category_rewrite) {
 		//add_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ) );
 		add_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ), 10, 4 );
 	} else {
-		$categories = get_categories( array( 'hide_empty' => false ) );
+		$categories = get_categories( array( 'hide_empty' => false, 'parent' => 0 ) );
 	}
 
 	foreach( $categories as $category ) {
@@ -107,9 +107,9 @@ function no_category_base_rewrite_rules($category_rewrite) {
 			$category_nicename = get_category_parents( $category->parent, false, '/', true ) . $category_nicename;
 		}
 
-		$category_rewrite['('.$category_nicename.')/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$'] = 'index.php?category_name=$matches[1]&feed=$matches[2]';
-		$category_rewrite["({$category_nicename})/{$wp_rewrite->pagination_base}/?([0-9]{1,})/?$"] = 'index.php?category_name=$matches[1]&paged=$matches[2]';
-		$category_rewrite['('.$category_nicename.')/?$'] = 'index.php?category_name=$matches[1]';
+		$category_rewrite['('.$category_nicename.'.*)/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$'] = 'index.php?category_name=$matches[1]&feed=$matches[2]';
+		$category_rewrite["({$category_nicename}.*)/{$wp_rewrite->pagination_base}/?([0-9]{1,})/?$"] = 'index.php?category_name=$matches[1]&paged=$matches[2]';
+		$category_rewrite['('.$category_nicename.'.*)/?$'] = 'index.php?category_name=$matches[1]';
 	}
 
 	// Redirect support from Old Category Base
