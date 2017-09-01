@@ -1,5 +1,5 @@
 {
-  "name": "menmo/no-category-base",
+  "name": "menmo/no-category-base-wpml",
   "description": "This plugin removes the mandatory 'Category Base' from your category permalinks.",
   "keywords": [
     "wordpress",
