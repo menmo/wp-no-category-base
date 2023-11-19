@@ -107,9 +107,14 @@ function no_category_base_rewrite_rules($category_rewrite) {
 			$category_nicename = get_category_parents( $category->parent, false, '/', true ) . $category_nicename;
 		}
 
-		$category_rewrite["({$category_nicename}(?:/.+)?)/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$"] = 'index.php?category_name=$matches[1]&feed=$matches[2]';
-		$category_rewrite["({$category_nicename}(?:/.+)?)/{$wp_rewrite->pagination_base}/?([0-9]{1,})/?$"] = 'index.php?category_name=$matches[1]&paged=$matches[2]';
-		$category_rewrite["({$category_nicename}(?:/.+)?)/?$"] = 'index.php?category_name=$matches[1]';
+    $decoded_category_nicename = urldecode( $category_nicename );
+		$category_slugs = array_unique( array( $category_nicename, $decoded_category_nicename ) );
+
+		foreach( $category_slugs as $category_slug ) {
+			$category_rewrite["({$category_slug}(?:/.+)?)/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$"] = 'index.php?category_name=$matches[1]&feed=$matches[2]';
+			$category_rewrite["({$category_slug}(?:/.+)?)/{$wp_rewrite->pagination_base}/?([0-9]{1,})/?$"] = 'index.php?category_name=$matches[1]&paged=$matches[2]';
+			$category_rewrite["({$category_slug}(?:/.+)?)/?$"] = 'index.php?category_name=$matches[1]';
+		}
 	}
 
 	// Redirect support from Old Category Base
